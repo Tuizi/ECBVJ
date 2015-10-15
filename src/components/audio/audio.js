@@ -1,11 +1,7 @@
 class Audio {
     constructor() {
-        navigator.getUserMedia = (
-            navigator.getUserMedia ||
-            navigator.webkitGetUserMedia ||
-            navigator.mozGetUserMedia ||
-            navigator.msGetUserMedia
-        );
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+        window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext;
 
         if (!navigator.getUserMedia) {
             throw new Error("getUserMedia not supported on your browser!")
@@ -13,23 +9,23 @@ class Audio {
     }
 
     init() {
+        let audioCtx = new window.AudioContext();
+
+        this.analyser = audioCtx.createAnalyser();
+        this.analyser.fftSize = 256;
+
         return new Promise((resolve, reject) => {
-            navigator.getUserMedia ({audio: true},
+            navigator.getUserMedia({audio: true},
                 // Success callback
                 (stream) => {
-                    let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    this.analyser = audioCtx.createAnalyser();
-                    this.analyser.fftSize = 256;
-                    let distortion = audioCtx.createWaveShaper();
-
                     let source = audioCtx.createMediaStreamSource(stream);
 
                     source.connect(this.analyser);
-                    this.analyser.connect(distortion);
+
                     resolve();
                 },
                 (err) => {
-                    reject('The following gUM error occured: ' + err);
+                    reject('The following gUM error occured: ' + err.name + ' ' + err.message);
                 }
             );
         });
@@ -43,7 +39,7 @@ class Audio {
         let bufferLength = this.analyser.fftSize,
             dataArray = new Uint8Array(bufferLength);
 
-        this.analyser.getByteTimeDomainData(dataArray);
+        this.analyser.getByteFrequencyData(dataArray);
 
         return dataArray;
     }
