@@ -1,6 +1,19 @@
 import Audio from './components/audio/audio.js';
 import Renderer  from './components/renderer/renderer.js';
 
-let audio = new Audio();
+window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
 
-audio.init();
+let audio = new Audio();
+let renderer = new Renderer("monitor");
+
+audio.init().then(() => {
+    renderer.init();
+    loop();
+});
+
+var loop = () => {
+    console.log('loop');
+    renderer.test(audio.data[2]);
+    renderer.render();
+    window.requestAnimationFrame(loop);
+};
