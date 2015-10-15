@@ -1,3 +1,3 @@
-export function init() {
-    console.log('renderer initialized...');
+export default class Renderer {
+
 }

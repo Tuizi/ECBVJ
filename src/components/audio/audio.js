@@ -1,4 +1,4 @@
-class Audio {
+export default class Audio {
     constructor() {
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
         window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext;
@@ -43,15 +43,4 @@ class Audio {
 
         return dataArray;
     }
-}
-
-export function init() {
-    var audio = new Audio();
-
-    audio.init().then(() => {
-        setInterval(() => {
-            console.log(audio.data);
-        }, 500);
-
-    });
 }
