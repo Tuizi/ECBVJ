@@ -1,0 +1,19 @@
+{
+  "name": "ECBVJ",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Tuizi/ECBVJ",
+  "authors": [
+    "Fabien Rogeret <fabien.rogeret@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
