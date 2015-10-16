@@ -1,19 +1,28 @@
-import Audio from './components/audio/audio.js';
-import Renderer  from './components/renderer/renderer.js';
+import Audio from './core/audio.js';
+import Registry from './core/_registry.js';
+import Renderer from './core/renderer.js';
+import Engine from './core/engine.js';
 
 window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext;
 
 let audio = new Audio();
-let renderer = new Renderer("monitor");
+let registry = new Registry();
+let renderer = new Renderer('board');
 
-audio.init().then(() => {
-    renderer.init();
-    loop();
-});
+let engine = new Engine(audio, registry, renderer);
 
-var loop = () => {
-    console.log('loop');
-    renderer.test(audio.data[2]);
-    renderer.render();
-    window.requestAnimationFrame(loop);
-};
+engine.start();
+
+//audio.init().then(() => {
+//    renderer.init();
+//    loop();
+//});
+//
+//var loop = () => {
+//    console.log('loop');
+//    renderer.test(audio.data[2]);
+//    renderer.render();
+//    window.requestAnimationFrame(loop);
+//};
