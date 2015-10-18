@@ -13,7 +13,7 @@ export default class Audio {
             let audioCtx = new window.AudioContext();
 
             this.analyser = audioCtx.createAnalyser();
-            this.analyser.fftSize = 256;
+            this.analyser.fftSize = 64;
 
             navigator.getUserMedia({audio: true},
                 // Success callback
@@ -38,6 +38,10 @@ export default class Audio {
 
     set fftSize(size) {
         this.analyser.fftSize = size;
+    }
+
+    get fftSize() {
+        return this.analyser.fftSize;
     }
 
     get data() {

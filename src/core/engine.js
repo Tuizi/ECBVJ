@@ -15,6 +15,12 @@ export default class Engine {
             this.audio.start();
             this.registry.start();
             this.renderer.start();
+
+            this.loop = setInterval(this.loop.bind(this), 10);
         });
+    }
+
+    loop() {
+        this.registry.process(this.audio.data);
     }
 }
