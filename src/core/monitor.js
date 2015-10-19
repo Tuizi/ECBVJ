@@ -1,11 +1,13 @@
-import * as _ from '../../libs/lodash/lodash.min';
-import Shape from '../../core/shape';
+import * as _ from '../libs/lodash/lodash.min';
 
 export default class Monitor {
     fGroup;
     bars;
 
-    constructor(fftSize, canvasWidth) {
+    constructor(audio, renderer) {
+        var fftSize = audio.fftSize,
+            canvasWidth = renderer.size.width;
+
         this.bars = [];
         let barWidth = canvasWidth / fftSize;
 

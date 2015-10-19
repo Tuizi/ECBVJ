@@ -1,15 +1,23 @@
 export default class Trigger {
-    freq;
-    shape;
+    _value;
+    _shape;
 
     constructor(freq, shape) {
-        this.freq = freq;
-        this.shape = shape;
+        this._value = freq;
+        this._shape = shape;
     }
 
     process(data) {
-        if(this.freq === 'all') {
-            this.shape.process(data);
+        if(this._value === 'all') {
+            this._shape.process(data);
         }
+    }
+
+    get shape() {
+        return this._shape;
+    }
+
+    get value() {
+        return this._value;
     }
 }

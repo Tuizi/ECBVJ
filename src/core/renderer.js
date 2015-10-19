@@ -18,8 +18,11 @@ export default class Renderer {
         });
     }
 
-    get width() {
-        return this.canvas.get('width');
+    get size() {
+        return {
+            width: this.canvas.width,
+            height: this.canvas.height
+        }
     }
 
     start() {
