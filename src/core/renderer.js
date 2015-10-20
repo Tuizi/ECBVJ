@@ -9,7 +9,7 @@ export default class Renderer {
                 {
                     width: window.innerWidth,
                     height: window.innerHeight,
-                    backgroundColor: "#000"
+                    backgroundColor: "skyblue"
                 });
 
             console.log("Renderer ready...");

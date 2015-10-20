@@ -6,10 +6,11 @@ import Trigger from './trigger';
 import Monitor from './monitor.js';
 
 export default class Engine {
-    constructor(canvasName) {
+    constructor(canvas) {
         this.audio = new Audio();
         this.registry = new Registry();
-        this.renderer = new Renderer(canvasName);
+
+        this.renderer = new Renderer();
     }
 
     start() {

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../src/libs/fabric.js/dist/fabric.min.js"></script>
+</head>
+<body>
+<canvas id="toto"></canvas>
+<script>
+    var canvas = new fabric.Canvas('toto', {
+        backgroundColor: "skyblue",
+        width: 800,
+        height: 600
+    });
+
+    var rect = new fabric.Rect({
+        left: 0,
+        top: 0,
+        fill: 'tomato',
+        width: 20,
+        height: 50
+    });
+
+    var text = new fabric.Text("0", {
+        fill: 'black',
+        top: 0,
+        originY: 'bottom',
+        fontSize: 12
+    });
+
+    var group = new fabric.Group([rect, text], {
+        top: canvas.height,
+        originY: 'bottom'
+    });
+
+    group.on("selected", function () {
+        console.log(1);
+    });
+
+    rect.on("selected", function () {
+        console.log(2);
+    });
+
+    canvas.add(group);
+</script>
+</body>
+</html>

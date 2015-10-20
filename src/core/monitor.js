@@ -6,23 +6,47 @@ export default class Monitor {
 
     constructor(audio, renderer) {
         var fftSize = audio.fftSize,
-            canvasWidth = renderer.size.width;
+            canvasSize = renderer.size;
 
         this.bars = [];
-        let barWidth = canvasWidth / fftSize;
-
-        console.debug('barWidth', barWidth);
+        let barWidth = canvasSize.width / fftSize,
+            texts = [];
 
         for (let i = 0; i < fftSize; i++) {
-            this.bars.push(new fabric.Rect({
+
+            var left = i * barWidth + i;
+
+            let rect = new fabric.Rect({
                 width: barWidth,
                 height: 0,
-                left: i * 10 + 1,
-                fill: 'tomato'
+                left: left,
+                fill: 'tomato',
+                originY: "bottom"
+            });
+
+            rect.on('selected', () => {
+                console.debug('selected');
+            });
+
+            this.bars.push(rect);
+
+            texts.push(new fabric.Text((i + 1).toString(), {
+                fill: 'white',
+                left: left + 6,
+                fontSize: 12
             }));
         }
 
-        this.fGroup = new fabric.Group(this.bars);
+        var items = _.chain([])
+            .concat(this.bars)
+            .concat(texts)
+            .value();
+
+        this.fGroup = new fabric.Group(items, {
+            top: canvasSize.height,
+            originY: 'bottom',
+            selectable: false
+        });
     }
 
     get group() {
@@ -33,6 +57,5 @@ export default class Monitor {
         _.each(this.bars, (bar, index) => {
             bar.set('height', data[index]);
         });
-        console.log('monitor process data :)');
     }
 }

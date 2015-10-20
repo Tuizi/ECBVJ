@@ -14,6 +14,9 @@ export default class Audio {
 
             this.analyser = audioCtx.createAnalyser();
             this.analyser.fftSize = 64;
+            //this.analyser.minDecibels = -90;
+            //this.analyser.maxDecibels = -10;
+            //this.analyser.smoothingTimeConstant = 0.85;
 
             navigator.getUserMedia({audio: true},
                 // Success callback

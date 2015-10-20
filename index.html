@@ -7,7 +7,32 @@
     <script src="src/libs/fabric.js/dist/fabric.min.js"></script>
 </head>
 <body>
-<canvas id="board"></canvas>
+<div class="flex-container">
+    <div class="flex-row row-main">
+        <div class="flex-row">
+            <section class="board">
+                <div class="canvas-container">
+                    <canvas id="board"></canvas>
+                </div>
+            </section>
+            <section class="editor canvas">
+                <header class="canvas-header">Editor</header>
+                <div class="canvas-container">
+                    <canvas id="editor"></canvas>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="flex-row row-monitor">
+        <section class="monitor canvas">
+            <header class="canvas-header">Monitor</header>
+            <div class="canvas-container">
+                <canvas id="monitor"></canvas>
+            </div>
+        </section>
+    </div>
+</div>
+<!--<canvas id="board"></canvas>-->
 <script src="build/app.js"></script>
 </body>
 </html>
