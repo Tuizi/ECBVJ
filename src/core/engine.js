@@ -1,41 +1,38 @@
 import Audio from './audio.js';
-import Registry from './registry.js';
-import Renderer from './renderer.js';
-import Trigger from './trigger';
 
 import Monitor from './monitor.js';
+import Editor from './editor.js';
+import Visual from './visual.js';
 
 export default class Engine {
     constructor(canvas) {
         this.audio = new Audio();
-        this.registry = new Registry();
 
-        this.renderer = new Renderer();
+        this.monitor = new Monitor(canvas.monitor, this.audio.fftSize);
+        //this.editor = new Editor(canvas.editor);
+        //this.visual = new Visual(canvas.visual);
     }
 
     start() {
         Promise.all([
             this.audio.init(),
-            this.registry.init(),
-            this.renderer.init()
-        ]).then(()=> {
-            console.log('Engine ready...');
-            this.audio.start();
-            this.registry.start();
-            this.renderer.start();
-
-            this.add(new Trigger('all', new Monitor(this.audio, this.renderer)));
-
-            this.loop = setInterval(this.loop.bind(this), 10);
-        });
+            this.monitor.init()
+        ]).then(
+            ()=> {
+                console.log('Engine ready...');
+                this.audio.start();
+            },
+            (err) => {
+                console.error(err);
+            });
     }
 
-    loop() {
-        this.registry.process(this.audio.data);
-    }
-
-    add(trigger) {
-        this.renderer.add(trigger.shape);
-        this.registry.add(trigger)
-    }
+    //loop() {
+    //    this.registry.process(this.audio.data);
+    //}
+    //
+    //add(trigger) {
+    //    this.renderer.add(trigger.shape);
+    //    this.registry.add(trigger)
+    //}
 }

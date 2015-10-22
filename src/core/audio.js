@@ -1,6 +1,9 @@
 export default class Audio {
     constructor() {
+        this.audioCtx = new window.AudioContext();
 
+        this.analyser = this.audioCtx.createAnalyser();
+        this.analyser.fftSize = 64;
     }
 
     init() {
@@ -10,18 +13,10 @@ export default class Audio {
                 return;
             }
 
-            let audioCtx = new window.AudioContext();
-
-            this.analyser = audioCtx.createAnalyser();
-            this.analyser.fftSize = 64;
-            //this.analyser.minDecibels = -90;
-            //this.analyser.maxDecibels = -10;
-            //this.analyser.smoothingTimeConstant = 0.85;
-
             navigator.getUserMedia({audio: true},
                 // Success callback
                 (stream) => {
-                    let source = audioCtx.createMediaStreamSource(stream);
+                    let source = this.audioCtx.createMediaStreamSource(stream);
 
                     source.connect(this.analyser);
 

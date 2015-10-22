@@ -1,61 +1,72 @@
-import * as _ from '../libs/lodash/lodash.min';
+import Renderer from './renderer.js';
 
-export default class Monitor {
-    fGroup;
-    bars;
+export default class Monitor extends Renderer {
+    constructor(canvasId, fftSize) {
+        super(canvasId);
 
-    constructor(audio, renderer) {
-        var fftSize = audio.fftSize,
-            canvasSize = renderer.size;
-
+        this.fftSize = fftSize;
         this.bars = [];
-        let barWidth = canvasSize.width / fftSize,
-            texts = [];
-
-        for (let i = 0; i < fftSize; i++) {
-
-            var left = i * barWidth + i;
-
-            let rect = new fabric.Rect({
-                width: barWidth,
-                height: 0,
-                left: left,
-                fill: 'tomato',
-                originY: "bottom"
-            });
-
-            rect.on('selected', () => {
-                console.debug('selected');
-            });
-
-            this.bars.push(rect);
-
-            texts.push(new fabric.Text((i + 1).toString(), {
-                fill: 'white',
-                left: left + 6,
-                fontSize: 12
-            }));
-        }
-
-        var items = _.chain([])
-            .concat(this.bars)
-            .concat(texts)
-            .value();
-
-        this.fGroup = new fabric.Group(items, {
-            top: canvasSize.height,
-            originY: 'bottom',
-            selectable: false
-        });
     }
 
-    get group() {
-        return this.fGroup;
-    }
+    init() {
+        return new Promise((resolve) => {
+            super.init().then(()=> {
+                let barWidth = (this.size.width - this.fftSize) / this.fftSize,
+                    barGroups = [];
 
-    process(data) {
-        _.each(this.bars, (bar, index) => {
-            bar.set('height', data[index]);
+                for (let i = 0; i < this.fftSize; i++) {
+                    //create the bar
+                    var left = i * barWidth + i;
+
+                    let rect = new fabric.Rect({
+                        width: barWidth,
+                        height: 10 + i,
+                        left: left,
+                        fill: 'tomato',
+                        originY: "bottom"
+                    });
+
+                    this.bars.push(rect);
+
+                    //create the text
+                    let text = new fabric.Text((i + 1).toString(), {
+                        fill: 'white',
+                        left: left,
+                        fontSize: 12
+                    });
+
+                    //create the group
+                    var barGroup = new fabric.Group([rect, text]);
+
+                    barGroup.on('mouse:up', ()=> {
+                        console.debug(':)')
+                    });
+
+                    barGroup.on('object:selected', ()=> {
+                        console.debug(':)')
+                    });
+
+                    barGroups.push(barGroup);
+                }
+
+                let renderGroup = new fabric.Group(barGroups, {
+                    top: this.size.height,
+                    originY: 'bottom',
+                    selectable: false
+                });
+
+                renderGroup.on('mouse:up', ()=> {
+                    console.debug('renderGroup :)')
+                });
+                renderGroup.on('object:selected', ()=> {
+                    console.debug('renderGroup :)')
+                });
+
+                this.canvas.add(renderGroup);
+
+                resolve();
+            });
         });
+
     }
 }

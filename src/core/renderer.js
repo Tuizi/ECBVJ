@@ -1,41 +1,35 @@
 export default class Renderer {
-    constructor(canvas) {
-        this.canvasName = canvas;
-    }
+    constructor(canvasId) {
+        this.canvasId = canvasId;
 
-    init() {
-        return new Promise((resolve)=> {
-            this.canvas = new fabric.Canvas(this.canvasName,
-                {
-                    width: window.innerWidth,
-                    height: window.innerHeight,
-                    backgroundColor: "skyblue"
-                });
-
-            console.log("Renderer ready...");
-
-            resolve();
-        });
+        this.parentElement = document.querySelector('#' + this.canvasId).parentElement;
     }
 
     get size() {
-        return {
-            width: this.canvas.width,
-            height: this.canvas.height
-        }
+        return {width: this.parentElement.clientWidth, height: this.parentElement.clientHeight};
+    }
+
+    init() {
+        return new Promise((resolve, reject)=> {
+            try {
+
+                this.canvas = new fabric.Canvas(this.canvasId, {
+                    width: this.size.width,
+                    height: this.size.height
+                });
+
+                resolve();
+            } catch (err) {
+                reject(err);
+            }
+        });
     }
 
     start() {
-        this.render();
+        console.warn(this.canvasId, 'start not yet implemented.');
     }
 
-    render() {
-        this.canvas.renderAll();
-
-        this.loop = window.requestAnimationFrame(this.render.bind(this));
-    }
-
-    add(shape) {
-        this.canvas.add(shape.group);
+    process() {
+        console.warn(this.canvasId, 'start not yet implemented.');
     }
 }
