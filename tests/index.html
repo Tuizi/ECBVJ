@@ -31,18 +31,27 @@
 
     var group = new fabric.Group([rect, text], {
         top: canvas.height,
-        originY: 'bottom'
+        originY: 'bottom',
+        selectable: false
     });
 
     group.on("selected", function () {
-        console.log(1);
+        console.log('group select');
+    });
+
+    group.on("object:selected", function () {
+        console.log('group select');
     });
 
     rect.on("selected", function () {
-        console.log(2);
+        console.log('rect select');
     });
 
-    canvas.add(group);
+    canvas.on("object:selected", function () {
+        console.log(0);
+    });
+
+    canvas.add(rect);
 </script>
 </body>
 </html>

@@ -12,57 +12,52 @@ export default class Monitor extends Renderer {
         return new Promise((resolve) => {
             super.init().then(()=> {
                 let barWidth = (this.size.width - this.fftSize) / this.fftSize,
-                    barGroups = [];
+                    canvasHeight = this.size.height;
 
                 for (let i = 0; i < this.fftSize; i++) {
-                    //create the bar
                     var left = i * barWidth + i;
 
+                    //create the background rect
+                    let rectBackground = new fabric.Rect({
+                        width: barWidth,
+                        height: canvasHeight
+                    });
+
+                    //create the bar
                     let rect = new fabric.Rect({
+                        originY: "bottom",
+                        top: canvasHeight,
                         width: barWidth,
                         height: 10 + i,
-                        left: left,
-                        fill: 'tomato',
-                        originY: "bottom"
+                        fill: 'tomato'
                     });
 
                     this.bars.push(rect);
 
                     //create the text
                     let text = new fabric.Text((i + 1).toString(), {
+                        top: canvasHeight,
+                        originY: 'bottom',
                         fill: 'white',
-                        left: left,
                         fontSize: 12
                     });
 
-                    //create the group
-                    var barGroup = new fabric.Group([rect, text]);
-
-                    barGroup.on('mouse:up', ()=> {
-                        console.debug(':)')
+                    //create the group bar
+                    let barGroup = new fabric.Group([rectBackground, rect, text], {
+                        left: left,
+                        hasControls: false,
+                        hasRotatingPoint: false,
+                        lockMovementX: true,
+                        lockMovementY: true
                     });
 
-                    barGroup.on('object:selected', ()=> {
-                        console.debug(':)')
+                    barGroup.on('selected', ()=> {
+                        debugger;
+                        console.log('select');
                     });
 
-                    barGroups.push(barGroup);
+                    this.canvas.add(barGroup);
                 }
-
-                let renderGroup = new fabric.Group(barGroups, {
-                    top: this.size.height,
-                    originY: 'bottom',
-                    selectable: false
-                });
-
-                renderGroup.on('mouse:up', ()=> {
-                    console.debug('renderGroup :)')
-                });
-                renderGroup.on('object:selected', ()=> {
-                    console.debug('renderGroup :)')
-                });
-
-                this.canvas.add(renderGroup);
 
                 resolve();
             });
