@@ -21,15 +21,20 @@ export default class Engine {
             ()=> {
                 console.log('Engine ready...');
                 this.audio.start();
+
+                this.loop();
+                //this.loopId = setInterval(this.loop.bind(this), 10);
             },
             (err) => {
                 console.error(err);
             });
     }
 
-    //loop() {
-    //    this.registry.process(this.audio.data);
-    //}
+    loop() {
+        this.monitor.process(this.audio.data);
+
+        window.requestAnimationFrame(this.loop.bind(this));
+    }
     //
     //add(trigger) {
     //    this.renderer.add(trigger.shape);

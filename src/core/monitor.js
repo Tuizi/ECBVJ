@@ -52,7 +52,6 @@ export default class Monitor extends Renderer {
                     });
 
                     barGroup.on('selected', ()=> {
-                        debugger;
                         console.log('select');
                     });
 
@@ -62,6 +61,13 @@ export default class Monitor extends Renderer {
                 resolve();
             });
         });
+    }
 
+    process(data) {
+        _.each(this.bars, (bar, index) => {
+            bar.set('height', data[index]);
+        });
+
+        this.canvas.renderAll();
     }
 }
