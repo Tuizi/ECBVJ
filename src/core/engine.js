@@ -8,22 +8,24 @@ export default class Engine {
     constructor(canvas) {
         this.audio = new Audio();
 
-        this.monitor = new Monitor(canvas.monitor, this.audio.fftSize);
-        //this.editor = new Editor(canvas.editor);
+        this.monitor = new Monitor(canvas.monitor, this.audio.fftSize, {
+            onFreqSelected: this.onFreqSelected.bind(this)
+        });
+        this.editor = new Editor(canvas.editor);
         //this.visual = new Visual(canvas.visual);
     }
 
     start() {
         Promise.all([
             this.audio.init(),
-            this.monitor.init()
+            this.monitor.init(),
+            this.editor.init()
         ]).then(
             ()=> {
                 console.log('Engine ready...');
                 this.audio.start();
 
                 this.loop();
-                //this.loopId = setInterval(this.loop.bind(this), 10);
             },
             (err) => {
                 console.error(err);
@@ -31,13 +33,15 @@ export default class Engine {
     }
 
     loop() {
-        this.monitor.process(this.audio.data);
+        var data = this.audio.data;
+
+        this.monitor.process(data);
+        this.editor.process(data);
 
         window.requestAnimationFrame(this.loop.bind(this));
     }
-    //
-    //add(trigger) {
-    //    this.renderer.add(trigger.shape);
-    //    this.registry.add(trigger)
-    //}
+
+    onFreqSelected(freq) {
+        this.editor.selectFreq(freq);
+    }
 }

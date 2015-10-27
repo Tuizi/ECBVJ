@@ -1,21 +1,24 @@
 import Renderer from './renderer.js';
 
+const SEPARATOR = 5;
+
 export default class Monitor extends Renderer {
-    constructor(canvasId, fftSize) {
+    constructor(canvasId, fftSize, config) {
         super(canvasId);
 
         this.fftSize = fftSize;
         this.bars = [];
+        this.config = config;
     }
 
     init() {
         return new Promise((resolve) => {
             super.init().then(()=> {
-                let barWidth = (this.size.width - this.fftSize) / this.fftSize,
+                let barWidth = (this.size.width - (this.fftSize * SEPARATOR)) / this.fftSize,
                     canvasHeight = this.size.height;
 
                 for (let i = 0; i < this.fftSize; i++) {
-                    var left = i * barWidth + i;
+                    var left = i * barWidth + (i * SEPARATOR);
 
                     //create the background rect
                     let rectBackground = new fabric.Rect({
@@ -48,11 +51,15 @@ export default class Monitor extends Renderer {
                         hasControls: false,
                         hasRotatingPoint: false,
                         lockMovementX: true,
-                        lockMovementY: true
+                        lockMovementY: true,
+                        data: {
+                            freq: i
+                        }
                     });
 
-                    barGroup.on('selected', ()=> {
-                        console.log('select');
+                    var context = this;
+                    barGroup.on('selected', function () {
+                        context.config.onFreqSelected(this.data.freq);
                     });
 
                     this.canvas.add(barGroup);
@@ -65,7 +72,7 @@ export default class Monitor extends Renderer {
 
     process(data) {
         _.each(this.bars, (bar, index) => {
-            bar.set('height', data[index]);
+            bar.setHeight(this.getHeightFromFreq(data[index]));
         });
 
         this.canvas.renderAll();

@@ -32,4 +32,8 @@ export default class Renderer {
     process() {
         console.warn(this.canvasId, 'start not yet implemented.');
     }
+
+    getHeightFromFreq(freq) {
+        return freq * this.canvas.height / 255;
+    }
 }
