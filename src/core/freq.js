@@ -13,7 +13,7 @@ export default class Freq extends Renderer {
                     top: canvasSize.height,
                     width: canvasSize.width,
                     height: 0,
-                    fill: 'tomato'
+                    fill: '#D4D4D4'
                 });
 
                 this.bar = rect;

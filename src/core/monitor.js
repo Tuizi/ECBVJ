@@ -1,6 +1,6 @@
 import Renderer from './renderer.js';
 
-const SEPARATOR = 5;
+const SEPARATOR = 1;
 
 export default class Monitor extends Renderer {
     constructor(canvasId, fftSize, config) {
@@ -32,7 +32,7 @@ export default class Monitor extends Renderer {
                         top: canvasHeight,
                         width: barWidth,
                         height: 10 + i,
-                        fill: 'tomato'
+                        fill: '#57575E'
                     });
 
                     this.bars.push(rect);
@@ -41,7 +41,7 @@ export default class Monitor extends Renderer {
                     let text = new fabric.Text((i + 1).toString(), {
                         top: canvasHeight,
                         originY: 'bottom',
-                        fill: 'white',
+                        fill: '#D4D4D4',
                         fontSize: 12
                     });
 
@@ -49,6 +49,7 @@ export default class Monitor extends Renderer {
                     let barGroup = new fabric.Group([rectBackground, rect, text], {
                         left: left,
                         hasControls: false,
+                        hasBorders: false,
                         hasRotatingPoint: false,
                         lockMovementX: true,
                         lockMovementY: true,
@@ -57,9 +58,9 @@ export default class Monitor extends Renderer {
                         }
                     });
 
-                    var context = this;
+                    let context = this;
                     barGroup.on('selected', function () {
-                        context.config.onFreqSelected(this.data.freq);
+                        context.onBarSelected(this.data.freq);
                     });
 
                     this.canvas.add(barGroup);
@@ -76,5 +77,16 @@ export default class Monitor extends Renderer {
         });
 
         this.canvas.renderAll();
+    }
+
+    onBarSelected(freqSelected) {
+        if (this.selectedBar) {
+            this.selectedBar.setColor('#57575E');
+        }
+
+        this.selectedBar = this.bars[freqSelected];
+        this.selectedBar.setColor('#D4D4D4');
+
+        this.config.onFreqSelected(freqSelected);
     }
 }

@@ -1,7 +1,10 @@
+//https://dribbble.com/shots/693245-Untitled-iOS-iPhone-synth-app-waveforms
+
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
+  background: #222227;
 }
 
 .flex-container {
@@ -21,30 +24,32 @@ html, body {
 }
 
 .wrapper {
-  background: skyblue;
+  //background: skyblue;
   height: 100%;
   width: 100%;
 }
 
 .monitor {
   @include flex-size(200px);
-  background: lightgreen;
+  //background: #222227;
+  border-top: 1px solid #A6A6A8;
 }
 
 .visual {
-  background: blue;
+  //background: #222227;
 }
 
 .editor {
   @include flex-size(300px);
-  background: yellow;
+  //background: yellow;
+  border-left: 1px solid #A6A6A8;
 }
 
 .freq {
-  background: yellow;
+  //background: yellow;
   @include flex-size(20px);
 }
 
 .editor-conf {
-  background: green;
+  //background: green;
 }
