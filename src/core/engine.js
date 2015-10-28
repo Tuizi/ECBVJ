@@ -1,7 +1,7 @@
 import Audio from './audio.js';
 
 import Monitor from './monitor.js';
-import Editor from './editor.js';
+import Freq from './freq.js';
 import Visual from './visual.js';
 
 export default class Engine {
@@ -11,7 +11,8 @@ export default class Engine {
         this.monitor = new Monitor(canvas.monitor, this.audio.fftSize, {
             onFreqSelected: this.onFreqSelected.bind(this)
         });
-        this.editor = new Editor(canvas.editor);
+        this.freq = new Freq(canvas.freq);
+        //this.editor = new Editor(canvas.editor);
         //this.visual = new Visual(canvas.visual);
     }
 
@@ -19,7 +20,8 @@ export default class Engine {
         Promise.all([
             this.audio.init(),
             this.monitor.init(),
-            this.editor.init()
+            this.freq.init()
+            //this.editor.init()
         ]).then(
             ()=> {
                 console.log('Engine ready...');
@@ -36,12 +38,13 @@ export default class Engine {
         var data = this.audio.data;
 
         this.monitor.process(data);
-        this.editor.process(data);
+        this.freq.process(data);
+        //this.editor.process(data);
 
         window.requestAnimationFrame(this.loop.bind(this));
     }
 
     onFreqSelected(freq) {
-        this.editor.selectFreq(freq);
+        this.freq.select(freq);
     }
 }

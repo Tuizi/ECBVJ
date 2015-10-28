@@ -8,32 +8,27 @@
     <script src="src/libs/lodash/lodash.min.js"></script>
 </head>
 <body>
-<div class="flex-container">
-    <div class="flex-row row-main">
-        <div class="flex-row">
-            <section class="board">
-                <div class="canvas-container">
-                    <canvas id="board"></canvas>
+
+<div class="wrapper flex-container flex-column">
+    <div class="flex-container flex-auto">
+        <div class="visual flex-auto">Visual</div>
+        <div class="editor flex-container flex-column">
+            <header>Header</header>
+            <div class="flex-container flex-auto">
+                <div class="freq">
+                    <canvas id="freq"></canvas>
                 </div>
-            </section>
-            <section class="editor canvas">
-                <header class="canvas-header">Editor</header>
-                <div class="canvas-container">
-                    <canvas id="editor"></canvas>
+                <div class="editor-conf flex-auto">
+                    Conf
                 </div>
-            </section>
+            </div>
         </div>
     </div>
-    <div class="flex-row row-monitor">
-        <section class="monitor canvas">
-            <header class="canvas-header">Monitor</header>
-            <div class="canvas-container">
-                <canvas id="monitor"></canvas>
-            </div>
-        </section>
+    <div class="monitor">
+        <canvas id="monitor"></canvas>
     </div>
 </div>
-<!--<canvas id="board"></canvas>-->
+
 <script src="build/app.js"></script>
 </body>
 </html>

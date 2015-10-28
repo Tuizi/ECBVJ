@@ -5,8 +5,7 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
 window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext;
 
 let engine = new Engine({
-    visual: 'visual',
-    editor: 'editor',
+    freq: 'freq',
     monitor: 'monitor'
 });
 

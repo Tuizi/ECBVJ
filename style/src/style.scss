@@ -1,63 +1,50 @@
-$baseColor: #1A1C1D;
-$white: #8e9091;
-
 html, body {
   height: 100%;
+  width: 100%;
   margin: 0;
-  padding: 0;
-  font-family: "Arial Narrow", Arial, sans-serif;
-  background: $baseColor;
-  overflow: hidden;
 }
 
 .flex-container {
   display: flex;
+}
+
+.flex-column {
   flex-direction: column;
+}
+
+.flex-auto {
+  flex: 1 0 auto;
+}
+
+@mixin flex-size($size) {
+  flex: 0 0 $size;
+}
+
+.wrapper {
+  background: skyblue;
   height: 100%;
   width: 100%;
 }
 
-.flex-row {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
+.monitor {
+  @include flex-size(200px);
+  background: lightgreen;
 }
 
-.row-main {
-  flex: 1 0 auto;
-}
-
-.row-monitor {
-  flex: 0 1 260px;
-}
-
-.canvas {
-  display: flex;
-  flex-direction: column;
-
-  .canvas-header {
-    flex: 0 1 20px;
-    box-shadow: 0 5px 5px 0 black;
-    color: $white;
-    text-align: center;
-  }
-
-  .canvas-container {
-    flex: 1 0 auto;
-  }
-}
-
-.board {
-  flex: 1 0 auto;
+.visual {
+  background: blue;
 }
 
 .editor {
-  flex: 0 1 300px;
-  border-left: 1px solid black;
+  @include flex-size(300px);
+  background: yellow;
 }
 
-.monitor {
-  border-top: 1px solid black;
-  width: 100%;
+.freq {
+  background: yellow;
+  @include flex-size(20px);
 }
 
+.editor-conf {
+  background: green;
+}
