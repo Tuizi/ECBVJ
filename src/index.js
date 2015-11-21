@@ -6,6 +6,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext || window
 
 let engine = new Engine({
     freq: 'freq',
+    editor: 'editor',
     monitor: 'monitor'
 });
 

@@ -2,6 +2,7 @@ import Audio from './audio.js';
 
 import Monitor from './monitor.js';
 import Freq from './freq.js';
+import Editor from './editor.js';
 import Visual from './visual.js';
 
 export default class Engine {
@@ -12,6 +13,7 @@ export default class Engine {
             onFreqSelected: this.onFreqSelected.bind(this)
         });
         this.freq = new Freq(canvas.freq);
+        //this.editor = new Editor(canvas.editor);
         //this.editor = new Editor(canvas.editor);
         //this.visual = new Visual(canvas.visual);
     }
