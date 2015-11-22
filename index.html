@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" href="style/style.css"/>
-    <script src="src/libs/fabric.js/dist/fabric.js"></script>
-    <script src="src/libs/lodash/lodash.min.js"></script>
+    <link rel="stylesheet" href="style/style.css" />
+    <script src="libs/fabric.js/dist/fabric.js"></script>
+    <script src="libs/lodash/lodash.min.js"></script>
+    <script src="libs/angular/angular.js"></script>
 </head>
+
 <body>
 
-<div class="wrapper flex-container flex-column">
-    <div class="flex-container flex-auto">
-        <div class="visual flex-auto">Visual</div>
-        <div class="editor flex-container flex-column">
-            <header>Header</header>
-            <div class="flex-container flex-auto">
-                <div class="freq">
-                    <canvas id="freq"></canvas>
-                </div>
-                <div class="editor-conf flex-auto">
-                    Conf
+    <div class="wrapper flex-container flex-column" ng-app="ecbvj">
+        <div class="flex-container flex-auto">
+            <div class="visual flex-auto">Visual</div>
+            <div class="editor flex-container flex-column">
+                <header>Header</header>
+                <div class="flex-container flex-auto">
+                    <graph class="freq"></graph>
+                    <div class="editor-conf flex-auto">
+                        Conf
+                    </div>
                 </div>
             </div>
         </div>
+        <graph class="monitor"></graph>
     </div>
-    <div class="monitor">
-        <canvas id="monitor"></canvas>
-    </div>
-</div>
 
-<script src="build/app.js"></script>
+    <script src="services/audio.js"></script>
+    <script src="components/graph/graph.js"></script>
+    <script src="app.js"></script>
+
 </body>
+
 </html>
